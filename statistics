@@ -213,4 +213,54 @@ ggscatter(alc_quin, x = "ALCOHOL INTAKE (g/kg) Av last 3 sessions", y = "QUININE
           cor.coef = TRUE, cor.method = "pearson",
           xlab = "Alcohol intake average over last 3 SIP sessions (g/kg)", 
           ylab = expression(paste("Quinine ", ring(resistance)^-1)))
+          
+# --- 27th final plots 
+
+#load data 
+library(readxl)
+X27th_data <- read_excel("~/Desktop/27th data.xlsx", 
+                         sheet = "Sheet1")
+View(X27th_data)
+
+#change column names
+names(X27th_data)[1] <- "Compulsive"
+names(X27th_data)[2] <- "Non-compulsive"
+
+#load ggpubr
+library(ggpubr)
+
+#convert into long format 
+long2 <- X27th_data %>%
+  gather(key = "group", value = "alohol_intake", 'Compulsive', 'Non-compulsive', '2BC') %>%
+  convert_as_factor(group)
+
+#make plot
+my_comparisons <- list( c("2BC", "Compulsive"), c("2BC", "Non-compulsive"), c("Compulsive", "Non-compulsive") )
+
+ggbarplot(long2, x = "group", y = "alohol_intake", 
+          add = c("mean_se", "jitter"),
+          fill = "hotpink", alpha = 0.6,
+          ylab = "Alcohol intake (g/kg)",
+          xlab = "",
+          position = position_dodge(0.8)) +
+  stat_compare_means(comparisons = my_comparisons, label = "p.format")+ # Add pairwise comparisons p-value
+  stat_compare_means(label.y = 80)                  # Add global p-value
+
+
+#satter plot 
+
+#load data 
+library(readxl)
+Y27th_data <- read_excel("~/Desktop/27th data.xlsx", 
+                         sheet = "Sheet2")
+View(Y27th_data)
+
+#plot
+ggscatter(Y27th_data, x = "Experimenter_2", y = "Experimenter_1", 
+          add = "reg.line", conf.int = TRUE, 
+          add.params = list(color = "black", fill = "hotpink"),
+          fill = "black", shape = 21, size = 3,
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "Experimenter 2", 
+          ylab = "Experimenter 1")
 
