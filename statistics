@@ -214,7 +214,6 @@ ggscatter(alc_quin, x = "ALCOHOL INTAKE (g/kg) Av last 3 sessions", y = "QUININE
           xlab = "Alcohol intake average over last 3 SIP sessions (g/kg)", 
           ylab = expression(paste("Quinine ", ring(resistance)^-1)))
           
-# --- 27th final plots 
 
 #load data 
 library(readxl)
@@ -247,7 +246,7 @@ ggbarplot(long2, x = "group", y = "alohol_intake",
   stat_compare_means(label.y = 80)                  # Add global p-value
 
 
-#satter plot 
+#scatter plot 
 
 #load data 
 library(readxl)
